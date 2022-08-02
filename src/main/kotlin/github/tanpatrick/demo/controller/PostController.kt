@@ -1,9 +1,12 @@
 package github.tanpatrick.demo.controller
 
+import github.tanpatrick.demo.dto.CreatePostDto
 import github.tanpatrick.demo.dto.PostDto
 import github.tanpatrick.demo.service.PostService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -12,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController
 class PostController(
     private val service: PostService
 ) {
+    @PostMapping
+    fun create(@RequestBody post: CreatePostDto) = service.create(post)
+
     @GetMapping
     fun findAll(): List<PostDto> = service.findAll()
 
