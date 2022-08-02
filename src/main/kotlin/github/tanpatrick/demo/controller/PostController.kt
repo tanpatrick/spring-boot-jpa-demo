@@ -2,6 +2,7 @@ package github.tanpatrick.demo.controller
 
 import github.tanpatrick.demo.dto.CreatePostDto
 import github.tanpatrick.demo.dto.PostDto
+import github.tanpatrick.demo.dto.UpdatePostDto
 import github.tanpatrick.demo.service.PostService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -23,4 +24,7 @@ class PostController(
 
     @GetMapping("/{postId}")
     fun findById(@PathVariable postId: Long): PostDto = service.findById(postId)
+
+    @PostMapping("/{postId}")
+    fun update(@PathVariable postId: Long, post: UpdatePostDto) = service.update(postId, post)
 }
