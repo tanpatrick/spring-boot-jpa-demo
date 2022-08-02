@@ -1,0 +1,32 @@
+package github.tanpatrick.demo.service
+
+import github.tanpatrick.demo.dto.PostDto
+import github.tanpatrick.demo.entity.PostEntity
+import github.tanpatrick.demo.exception.RecordNotFound
+import github.tanpatrick.demo.repository.PostRepository
+import org.springframework.stereotype.Service
+
+@Service
+class PostService(
+    private val repository: PostRepository
+) {
+    fun findAll(): List<PostDto> {
+        return repository.findAll()
+            .map(this::convertToDto)
+    }
+
+    fun findById(postId: Long): PostDto {
+        val entity = findEntityById(postId)
+        return convertToDto(entity)
+    }
+
+    private fun findEntityById(postId: Long) = repository.findById(postId)
+        .orElseThrow { RecordNotFound(postId) }
+
+    private fun convertToDto(entity: PostEntity) = PostDto(
+        id = entity.id ?: 0L,
+        title = entity.title,
+        body = entity.body,
+        createdAt = entity.createdAt
+    )
+}
