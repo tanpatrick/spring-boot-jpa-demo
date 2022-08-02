@@ -26,6 +26,7 @@ class PostController(
     @GetMapping("/{postId}")
     fun findById(@PathVariable postId: Long, @RequestParam fetchCommentsMode: FetchCommentMode = FetchCommentMode.NONE): PostDto = when(fetchCommentsMode) {
         FetchCommentMode.FETCH_COMMENTS_BY_ENTITY_GRAPH -> service.findByIdWithCommentsFetchedByEntityGraph(postId)
+        FetchCommentMode.FETCH_COMMENTS_BY_LAZY_LOADING -> service.findByIdWithCommentsLazyLoaded(postId)
         else -> service.findById(postId)
     }
 
@@ -36,4 +37,5 @@ class PostController(
 enum class FetchCommentMode {
     NONE,
     FETCH_COMMENTS_BY_ENTITY_GRAPH,
+    FETCH_COMMENTS_BY_LAZY_LOADING
 }

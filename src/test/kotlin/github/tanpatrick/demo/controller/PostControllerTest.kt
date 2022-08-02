@@ -5,6 +5,8 @@ import github.tanpatrick.demo.dto.CreatePostDto
 import github.tanpatrick.demo.dto.PostDto
 import github.tanpatrick.demo.dto.UpdatePostDto
 import org.assertj.core.api.Assertions.assertThat
+import org.hibernate.LazyInitializationException
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -67,6 +69,13 @@ class PostControllerTest {
                     )
                 )
             )
+    }
+
+    @Test
+    fun `Verify find post by id with lazy comments and should throw LazyInitializationException`() {
+        assertThrows(LazyInitializationException::class.java, {
+            controller.findById(1, fetchCommentsMode = FetchCommentMode.FETCH_COMMENTS_BY_LAZY_LOADING)
+        }, "LazyInitializationException was expected")
     }
 
     @Test

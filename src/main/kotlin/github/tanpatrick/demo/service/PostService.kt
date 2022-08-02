@@ -39,6 +39,14 @@ class PostService(
         )
     }
 
+    fun findByIdWithCommentsLazyLoaded(postId: Long): PostDto {
+        val entity = findEntityById(postId)
+        return convertToDto(
+            entity = entity,
+            mapComments = true
+        )
+    }
+
     fun update(postId: Long, post: UpdatePostDto): PostDto {
         val entity = PostEntity(
             id = postId,
