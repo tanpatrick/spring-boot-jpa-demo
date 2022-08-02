@@ -28,13 +28,23 @@ class PostEntity(
     var body: String,
 ) {
     @OneToMany(
+        cascade = [CascadeType.PERSIST],
         fetch = FetchType.LAZY,
         mappedBy = "post"
     )
     @OrderBy("id")
-    val comments: Set<CommentEntity> = emptySet()
+    val comments: MutableSet<CommentEntity> = mutableSetOf()
 
     @Column(nullable = false, updatable = false)
     @CreatedDate
     val createdAt: LocalDateTime = LocalDateTime.now()
+
+    fun addComment(body: String) {
+        comments.add(
+            CommentEntity(
+                body = body,
+                post = this
+            )
+        )
+    }
 }

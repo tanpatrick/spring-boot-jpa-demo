@@ -14,11 +14,17 @@ class PostService(
     private val repository: PostRepository
 ) {
     fun create(post: CreatePostDto): PostDto {
-        val entity = repository.save(PostEntity(
+        val entity = PostEntity(
             title =  post.title,
-            body = post.body
-        ))
-        return convertToDto(entity)
+            body = post.body,
+        )
+
+        post.comments.forEach {
+            entity.addComment(it.body)
+        }
+
+        val createdPost = repository.save(entity)
+        return convertToDto(createdPost)
     }
     fun findAll(): List<PostDto> {
         return repository.findAll()

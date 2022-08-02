@@ -1,6 +1,7 @@
 package github.tanpatrick.demo.controller
 
 import github.tanpatrick.demo.dto.CommentDto
+import github.tanpatrick.demo.dto.CreateCommentDto
 import github.tanpatrick.demo.dto.CreatePostDto
 import github.tanpatrick.demo.dto.PostDto
 import github.tanpatrick.demo.dto.UpdatePostDto
@@ -102,6 +103,35 @@ class PostControllerTest {
                     body = "Dolorem eum magni eos aperiam quia"
                 ),
                 createdPost
+            )
+    }
+
+    @Test
+    fun `Verify create post with comments`() {
+        val post = CreatePostDto(
+            title = "Magnam facilis autem",
+            body = "Dignissimos aperiam dolorem qui eum facilis quibusdam animi sint suscipit qui sint possimus",
+            comments = listOf(
+                CreateCommentDto("Vero eaque aliquid doloribus et culpa"),
+                CreateCommentDto("Et fugit eligendi deleniti quidem qui sint nihil autem")
+            )
+        )
+        val createdPost = PostDto(id = 3, title = post.title, body = post.body)
+
+        assertThat(controller.create(post))
+            .isEqualTo(createdPost)
+
+        assertThat(controller.findById(3, FetchCommentMode.FETCH_COMMENTS_BY_ENTITY_GRAPH))
+            .isEqualTo(
+                PostDto(
+                    id = 3,
+                    title = post.title,
+                    body = post.body,
+                    comments = listOf(
+                        CommentDto(id = 3, body = "Vero eaque aliquid doloribus et culpa"),
+                        CommentDto(id = 4, body = "Et fugit eligendi deleniti quidem qui sint nihil autem")
+                    )
+                )
             )
     }
 
