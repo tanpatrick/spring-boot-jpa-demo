@@ -1,5 +1,6 @@
 package github.tanpatrick.demo.service
 
+import github.tanpatrick.demo.dto.CommentDto
 import github.tanpatrick.demo.dto.CreatePostDto
 import github.tanpatrick.demo.dto.PostDto
 import github.tanpatrick.demo.dto.UpdatePostDto
@@ -29,6 +30,15 @@ class PostService(
         return convertToDto(entity)
     }
 
+    fun findByIdWithCommentsFetchedByEntityGraph(postId: Long): PostDto {
+        val entity = repository.findPostCommentsById(postId)
+            .orElseThrow { RecordNotFound(postId) }
+        return convertToDto(
+            entity = entity,
+            mapComments = true
+        )
+    }
+
     fun update(postId: Long, post: UpdatePostDto): PostDto {
         val entity = PostEntity(
             id = postId,
@@ -42,10 +52,15 @@ class PostService(
     private fun findEntityById(postId: Long) = repository.findById(postId)
         .orElseThrow { RecordNotFound(postId) }
 
-    private fun convertToDto(entity: PostEntity) = PostDto(
+    private fun convertToDto(entity: PostEntity, mapComments: Boolean = false) = PostDto(
         id = entity.id ?: 0L,
         title = entity.title,
         body = entity.body,
-        createdAt = entity.createdAt
+        createdAt = entity.createdAt,
+        comments = if (mapComments) {
+            entity.comments.map { CommentDto(id = it.id ?: 0L, body = it.body, createdAt = it.createdAt) }
+        } else {
+            emptyList()
+        }
     )
 }

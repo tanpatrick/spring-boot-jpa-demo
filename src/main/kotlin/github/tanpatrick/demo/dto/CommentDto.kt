@@ -3,24 +3,20 @@ package github.tanpatrick.demo.dto
 import org.apache.commons.lang3.builder.EqualsBuilder
 import java.time.LocalDateTime
 
-data class PostDto(
+data class CommentDto(
     val id: Long,
-    val title: String,
     val body: String,
-    val createdAt: LocalDateTime? = null,
-    val comments: List<CommentDto>? = emptyList()
+    val createdAt: LocalDateTime? = null
 ) {
 
     override fun equals(other: Any?): Boolean {
-        if (other !is PostDto) {
+        if (other !is CommentDto) {
             return false
         }
 
         return EqualsBuilder()
             .append(id, other.id)
-            .append(title, other.title)
             .append(body, other.body)
-            .append(comments, other.comments)
             .isEquals
     }
 }

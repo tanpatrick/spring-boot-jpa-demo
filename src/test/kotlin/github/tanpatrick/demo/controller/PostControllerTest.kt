@@ -1,5 +1,6 @@
 package github.tanpatrick.demo.controller
 
+import github.tanpatrick.demo.dto.CommentDto
 import github.tanpatrick.demo.dto.CreatePostDto
 import github.tanpatrick.demo.dto.PostDto
 import github.tanpatrick.demo.dto.UpdatePostDto
@@ -42,6 +43,28 @@ class PostControllerTest {
                     id = 1,
                     title = "Sunt aut facere repellat provident",
                     body = "Quia et suscipit suscipit recusandae consequuntur expedita et cum reprehenderit molestiae ut"
+                )
+            )
+    }
+
+    @Test
+    fun `Verify find post by id with comments fetched by EntityGraph`() {
+        assertThat(controller.findById(1, FetchCommentMode.FETCH_COMMENTS_BY_ENTITY_GRAPH))
+            .isEqualTo(
+                PostDto(
+                    id = 1,
+                    title = "Sunt aut facere repellat provident",
+                    body = "Quia et suscipit suscipit recusandae consequuntur expedita et cum reprehenderit molestiae ut",
+                    comments = listOf(
+                        CommentDto(
+                            id = 1,
+                            body = "Laudantium enim quasi est quidem magnam voluptate ipsam eos"
+                        ),
+                        CommentDto(
+                            id = 2,
+                            body = "Est natus enim nihil est dolore omnis voluptatem numquam"
+                        )
+                    )
                 )
             )
     }

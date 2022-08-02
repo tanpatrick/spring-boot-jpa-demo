@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -23,8 +24,16 @@ class PostController(
     fun findAll(): List<PostDto> = service.findAll()
 
     @GetMapping("/{postId}")
-    fun findById(@PathVariable postId: Long): PostDto = service.findById(postId)
+    fun findById(@PathVariable postId: Long, @RequestParam fetchCommentsMode: FetchCommentMode = FetchCommentMode.NONE): PostDto = when(fetchCommentsMode) {
+        FetchCommentMode.FETCH_COMMENTS_BY_ENTITY_GRAPH -> service.findByIdWithCommentsFetchedByEntityGraph(postId)
+        else -> service.findById(postId)
+    }
 
     @PostMapping("/{postId}")
     fun update(@PathVariable postId: Long, post: UpdatePostDto) = service.update(postId, post)
+}
+
+enum class FetchCommentMode {
+    NONE,
+    FETCH_COMMENTS_BY_ENTITY_GRAPH,
 }
