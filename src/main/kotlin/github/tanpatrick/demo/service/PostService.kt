@@ -61,7 +61,7 @@ class PostService(
         )
 
         post.comments.forEach {
-            entity.addComment(it.body)
+            entity.addComment(it.body, it.id)
         }
 
         return convertToDto(repository.save(entity))

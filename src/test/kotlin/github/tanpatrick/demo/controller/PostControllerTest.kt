@@ -193,4 +193,38 @@ class PostControllerTest {
                 )
             )
     }
+
+    @Test
+    fun `Verify update post with add and update comments`() {
+        val post = UpdatePostDto(
+            title = "Magnam facilis autem",
+            body = "Dignissimos aperiam dolorem qui eum facilis quibusdam animi sint suscipit qui sint possimus",
+            comments = listOf(
+                CommentDto(id = 1, body = "Vero eaque aliquid"),
+                CommentDto(body = "Provident id voluptas")
+            )
+        )
+        val updatedPost = PostDto(
+            id = 1,
+            title = post.title,
+            body = post.body
+        )
+
+        assertThat(controller.update(1, post))
+            .isEqualTo(updatedPost)
+
+        assertThat(controller.findById(1, FetchCommentMode.FETCH_COMMENTS_BY_ENTITY_GRAPH))
+            .isEqualTo(
+                PostDto(
+                    id = 1,
+                    title = post.title,
+                    body = post.body,
+                    comments = listOf(
+                        CommentDto(id = 1, body = "Vero eaque aliquid"),
+                        CommentDto(id = 2, body = "Est natus enim nihil est dolore omnis voluptatem numquam"),
+                        CommentDto(id = 3, body = "Provident id voluptas")
+                    )
+                )
+            )
+    }
 }

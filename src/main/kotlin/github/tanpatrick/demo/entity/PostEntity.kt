@@ -42,9 +42,10 @@ class PostEntity(
     @CreatedDate
     val createdAt: LocalDateTime = LocalDateTime.now()
 
-    fun addComment(body: String) {
+    fun addComment(body: String, commentId: Long? = null) {
         comments.add(
             CommentEntity(
+                id = commentId,
                 body = body,
                 post = this,
             )
