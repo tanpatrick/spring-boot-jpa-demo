@@ -39,6 +39,33 @@ class PostControllerTest {
     }
 
     @Test
+    fun `Verify find all posts with comments`() {
+        assertThat(controller.findAll(FetchCommentMode.FETCH_COMMENTS_BY_ENTITY_GRAPH))
+            .containsExactly(
+                PostDto(
+                    id = 1,
+                    title = "Sunt aut facere repellat provident",
+                    body = "Quia et suscipit suscipit recusandae consequuntur expedita et cum reprehenderit molestiae ut",
+                    comments = listOf(
+                        CommentDto(
+                            id = 1,
+                            body = "Laudantium enim quasi est quidem magnam voluptate ipsam eos"
+                        ),
+                        CommentDto(
+                            id = 2,
+                            body = "Est natus enim nihil est dolore omnis voluptatem numquam"
+                        )
+                    )
+                ),
+                PostDto(
+                    id = 2,
+                    title = "Qui est esse",
+                    body = "Dolorem eum magni eos aperiam quia"
+                )
+            )
+    }
+
+    @Test
     fun `Verify find post by id`() {
         assertThat(controller.findById(1))
             .isEqualTo(

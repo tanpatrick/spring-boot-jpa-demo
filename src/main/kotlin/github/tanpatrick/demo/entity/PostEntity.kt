@@ -27,8 +27,6 @@ class PostEntity(
     @Column(nullable = false)
     var body: String,
 ) {
-    constructor(id: Long) : this(id = id, title = "", body = "")
-
     @OneToMany(
         cascade = [
             CascadeType.PERSIST,

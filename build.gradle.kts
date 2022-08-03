@@ -5,6 +5,7 @@ plugins {
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
 
 	kotlin("jvm") version "1.6.21"
+	kotlin("kapt") version "1.6.21"
 	kotlin("plugin.spring") version "1.6.21"
 	kotlin("plugin.jpa") version "1.6.21"
 }
@@ -18,6 +19,8 @@ repositories {
 }
 
 dependencies {
+	kapt("org.hibernate:hibernate-jpamodelgen:5.6.10.Final")
+
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 

@@ -41,6 +41,16 @@ class PostService(
             .map(this::convertToDto)
     }
 
+    fun findAllWithCommentsFetchedByEntityGraph(): List<PostDto> {
+        return repository.findAllFetchComments()
+            .map {
+                convertToDto(
+                    entity = it,
+                    mapComments = true
+                )
+            }
+    }
+
     fun findById(postId: Long): PostDto {
         val entity = findEntityById(postId)
         return convertToDto(entity)
