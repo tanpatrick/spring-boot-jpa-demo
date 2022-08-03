@@ -6,16 +6,19 @@ import github.tanpatrick.demo.dto.PostDto
 import github.tanpatrick.demo.dto.UpdatePostDto
 import github.tanpatrick.demo.entity.PostEntity
 import github.tanpatrick.demo.exception.RecordNotFound
+import github.tanpatrick.demo.repository.CommentRepository
 import github.tanpatrick.demo.repository.PostRepository
 import org.springframework.stereotype.Service
+import javax.transaction.Transactional
 
 @Service
 class PostService(
+    private val commentRepository: CommentRepository,
     private val repository: PostRepository
 ) {
     fun create(post: CreatePostDto): PostDto {
         val entity = PostEntity(
-            title =  post.title,
+            title = post.title,
             body = post.body,
         )
 
@@ -26,6 +29,13 @@ class PostService(
         val createdPost = repository.save(entity)
         return convertToDto(createdPost)
     }
+
+    @Transactional
+    fun delete(postId: Long) {
+        commentRepository.deleteAllByPostId(postId)
+        repository.deleteById(postId)
+    }
+
     fun findAll(): List<PostDto> {
         return repository.findAll()
             .map(this::convertToDto)

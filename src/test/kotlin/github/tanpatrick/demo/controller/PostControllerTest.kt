@@ -227,4 +227,18 @@ class PostControllerTest {
                 )
             )
     }
+
+    @Test
+    fun `Verify delete post and all comments associated to it`() {
+        controller.delete(1)
+
+        assertThat(controller.findAll())
+            .containsExactly(
+                PostDto(
+                    id = 2,
+                    title = "Qui est esse",
+                    body = "Dolorem eum magni eos aperiam quia"
+                )
+            )
+    }
 }

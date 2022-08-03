@@ -4,6 +4,7 @@ import github.tanpatrick.demo.dto.CreatePostDto
 import github.tanpatrick.demo.dto.PostDto
 import github.tanpatrick.demo.dto.UpdatePostDto
 import github.tanpatrick.demo.service.PostService
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -19,6 +20,9 @@ class PostController(
 ) {
     @PostMapping
     fun create(@RequestBody post: CreatePostDto) = service.create(post)
+
+    @DeleteMapping("/{postId}")
+    fun delete(@PathVariable postId: Long) = service.delete(postId)
 
     @GetMapping
     fun findAll(): List<PostDto> = service.findAll()
