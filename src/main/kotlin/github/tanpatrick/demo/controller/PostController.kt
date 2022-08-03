@@ -25,13 +25,13 @@ class PostController(
     fun delete(@PathVariable postId: Long) = service.delete(postId)
 
     @GetMapping
-    fun findAll(@RequestParam fetchCommentsMode: FetchCommentMode = FetchCommentMode.NONE) = when(fetchCommentsMode) {
+    fun findAll(@RequestParam(defaultValue = "NONE") fetchCommentsMode: FetchCommentMode = FetchCommentMode.NONE) = when(fetchCommentsMode) {
         FetchCommentMode.FETCH_COMMENTS_BY_ENTITY_GRAPH -> service.findAllWithCommentsFetchedByEntityGraph()
         else -> service.findAll()
     }
 
     @GetMapping("/{postId}")
-    fun findById(@PathVariable postId: Long, @RequestParam fetchCommentsMode: FetchCommentMode = FetchCommentMode.NONE): PostDto = when(fetchCommentsMode) {
+    fun findById(@PathVariable postId: Long, @RequestParam(defaultValue = "NONE") fetchCommentsMode: FetchCommentMode = FetchCommentMode.NONE): PostDto = when(fetchCommentsMode) {
         FetchCommentMode.FETCH_COMMENTS_BY_ENTITY_GRAPH -> service.findByIdWithCommentsFetchedByEntityGraph(postId)
         FetchCommentMode.FETCH_COMMENTS_BY_LAZY_LOADING -> service.findByIdWithCommentsLazyLoaded(postId)
         else -> service.findById(postId)
