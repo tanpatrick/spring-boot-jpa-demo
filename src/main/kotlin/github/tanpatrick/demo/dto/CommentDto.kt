@@ -4,7 +4,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder
 import java.time.LocalDateTime
 
 data class CommentDto(
-    val id: Long,
+    val id: Long? = null,
     val body: String,
     val createdAt: LocalDateTime? = null
 ) {

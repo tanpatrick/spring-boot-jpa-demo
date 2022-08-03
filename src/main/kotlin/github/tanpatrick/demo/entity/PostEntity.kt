@@ -28,7 +28,10 @@ class PostEntity(
     var body: String,
 ) {
     @OneToMany(
-        cascade = [CascadeType.PERSIST],
+        cascade = [
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+                  ],
         fetch = FetchType.LAZY,
         mappedBy = "post"
     )
@@ -43,7 +46,7 @@ class PostEntity(
         comments.add(
             CommentEntity(
                 body = body,
-                post = this
+                post = this,
             )
         )
     }
