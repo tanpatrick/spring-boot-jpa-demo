@@ -5,6 +5,8 @@ import java.time.LocalDateTime
 import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
 import javax.persistence.FetchType
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -26,6 +28,9 @@ class PostEntity(
 
     @Column(nullable = false)
     var body: String,
+
+    @Enumerated(EnumType.STRING)
+    var status: PostStatus = PostStatus.DRAFT
 ) {
     @OneToMany(
         cascade = [
@@ -51,4 +56,9 @@ class PostEntity(
             )
         )
     }
+}
+
+enum class PostStatus {
+    DRAFT,
+    PUBLISHED
 }

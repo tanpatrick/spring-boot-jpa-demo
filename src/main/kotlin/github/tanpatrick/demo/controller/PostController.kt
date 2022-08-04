@@ -30,6 +30,12 @@ class PostController(
         else -> service.findAll()
     }
 
+    @GetMapping("/drafts")
+    fun findAllDraft() = service.findAllDrafts()
+
+    @GetMapping("/published")
+    fun findAllPublished() = service.findAllPublished()
+
     @GetMapping("/{postId}")
     fun findById(@PathVariable postId: Long, @RequestParam(defaultValue = "NONE") fetchCommentsMode: FetchCommentMode = FetchCommentMode.NONE): PostDto = when(fetchCommentsMode) {
         FetchCommentMode.FETCH_COMMENTS_BY_ENTITY_GRAPH -> service.findByIdWithCommentsFetchedByEntityGraph(postId)

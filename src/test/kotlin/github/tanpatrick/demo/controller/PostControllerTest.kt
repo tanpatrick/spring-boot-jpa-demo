@@ -22,6 +22,32 @@ class PostControllerTest {
     lateinit var controller: PostController
 
     @Test
+    fun `Verify find all draft posts`() {
+        assertThat(controller.findAllDraft())
+            .containsExactly(
+                PostDto(
+                    id = 1,
+                    title = "Sunt aut facere repellat provident",
+                    body = "Quia et suscipit suscipit recusandae consequuntur expedita et cum reprehenderit molestiae ut"
+                )
+            )
+
+    }
+
+    @Test
+    fun `Verify find all published posts`() {
+        assertThat(controller.findAllPublished())
+            .containsExactly(
+                PostDto(
+                    id = 2,
+                    title = "Qui est esse",
+                    body = "Dolorem eum magni eos aperiam quia"
+                )
+            )
+
+    }
+
+    @Test
     fun `Verify find all posts`() {
         assertThat(controller.findAll())
             .containsExactly(

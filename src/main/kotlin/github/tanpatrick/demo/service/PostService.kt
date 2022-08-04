@@ -5,6 +5,7 @@ import github.tanpatrick.demo.dto.CreatePostDto
 import github.tanpatrick.demo.dto.PostDto
 import github.tanpatrick.demo.dto.UpdatePostDto
 import github.tanpatrick.demo.entity.PostEntity
+import github.tanpatrick.demo.entity.PostStatus
 import github.tanpatrick.demo.exception.RecordNotFound
 import github.tanpatrick.demo.repository.CommentRepository
 import github.tanpatrick.demo.repository.PostRepository
@@ -38,6 +39,16 @@ class PostService(
 
     fun findAll(): List<PostDto> {
         return repository.findAll()
+            .map(this::convertToDto)
+    }
+
+    fun findAllDrafts(): List<PostDto> {
+        return repository.findAllByStatus(PostStatus.DRAFT)
+            .map(this::convertToDto)
+    }
+
+    fun findAllPublished(): List<PostDto> {
+        return repository.findAllByStatus(PostStatus.PUBLISHED)
             .map(this::convertToDto)
     }
 
