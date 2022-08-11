@@ -6,7 +6,7 @@ import github.tanpatrick.demo.dto.PostDto
 import github.tanpatrick.demo.dto.UpdatePostDto
 import github.tanpatrick.demo.entity.PostEntity
 import github.tanpatrick.demo.entity.PostStatus
-import github.tanpatrick.demo.exception.RecordNotFound
+import github.tanpatrick.demo.others.RecordNotFound
 import github.tanpatrick.demo.repository.CommentRepository
 import github.tanpatrick.demo.repository.PostRepository
 import org.springframework.stereotype.Service
