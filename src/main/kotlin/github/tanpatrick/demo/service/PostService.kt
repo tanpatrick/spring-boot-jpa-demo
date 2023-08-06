@@ -9,8 +9,8 @@ import github.tanpatrick.demo.entity.PostStatus
 import github.tanpatrick.demo.others.RecordNotFound
 import github.tanpatrick.demo.repository.CommentRepository
 import github.tanpatrick.demo.repository.PostRepository
+import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
-import javax.transaction.Transactional
 
 @Service
 class PostService(

@@ -2,9 +2,9 @@ package github.tanpatrick.demo.repository.custom
 
 import github.tanpatrick.demo.entity.PostEntity
 import github.tanpatrick.demo.entity.PostEntity_
-import javax.persistence.EntityManager
-import javax.persistence.PersistenceContext
-import javax.persistence.criteria.JoinType
+import jakarta.persistence.EntityManager
+import jakarta.persistence.PersistenceContext
+import jakarta.persistence.criteria.JoinType
 
 class CustomPostRepositoryImpl : CustomPostRepository {
 
